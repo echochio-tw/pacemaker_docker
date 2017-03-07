@@ -68,6 +68,26 @@ Online: [ test.com ]
 
 No active resources
 
+# docker exec pcmk_test  pcs status
+Cluster name: docker
+WARNING: corosync and pacemaker node names do not match (IPs used in setup?)
+Stack: corosync
+Current DC: test.com (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
+Last updated: Tue Mar  7 08:07:18 2017          Last change: Tue Mar  7 08:04:35 2017 by root via cibadmin on test.com
+
+1 node and 0 resources configured
+
+Online: [ test.com ]
+
+No resources
+
+
+Daemon Status:
+  corosync: inactive/disabled
+  pacemaker: inactive/disabled
+  pcsd: inactive/disabled
+
+
 ```
 
 Verify that the container has access to the host's docker instance
@@ -88,23 +108,6 @@ docker exec pcmk_test pcs resource create mycontainer ocf:heartbeat:docker image
 
 ## Launch an entire pacemaker cluster across multiple hosts.
 
-The examples so far demonstrate how to build and launch a standalone single
-instance pacemaker container. In practice, this is useless. All a standalone
-pacemaker instance does is show us that we got the "containerize pacemaker"
-part right. Now lets launch a real pacemaker cluster.
-
-In order to do this, we need to know the static IP addresses of the hosts
-machines that make up our pacemaker cluster. In this example, my static
-IP addresses are 192.168.122.71 192.168.122.72 and 192.168.122.73. These
-are the actual addresses assigned to a NIC on three docker host machines.
-
-Once we know our three static IP addresses, launching a pacemaker cluster
-is trivial. We can run the exact same set of commands on each host node.
-
-First. load up the pacemaker container from the .tar file. You'll need to
-copy the .tar file the 'pcmk_create_image' script generates to each host.
-In this example, my container image ID is 248b5d9effc4.
-
 ```
 docker load < pcmk_container_248b5d9effc4.tar
 ```
@@ -115,7 +118,7 @@ launch script knows how to take the PCMK_NODE_LIST environment variable and
 dynamically create the corosync.conf file we need to form the cluster.
 
 ```
-docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock -e PCMK_NODE_LIST="192.168.122.71 192.168.122.72 192.168.122.73" --net=host --privileged=true --name=pcmk_test 248b5d9effc4
+docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock -e PCMK_NODE_LIST="192.168.122.71 192.168.122.72 192.168.122.73" --net=host --privileged=true --name=pcmk_test pacemaker_docker
 ```
 
 Now, after executing those two commands on each host, you should be able
