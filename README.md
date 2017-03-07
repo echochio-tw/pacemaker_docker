@@ -99,59 +99,5 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 ```
 
-Verify the containerized pacemaker instance can launch and monitor a
-container on the docker host machine.
-```
-docker exec pcmk_test pcs property set stonith-enabled=false
-docker exec pcmk_test pcs resource create mycontainer ocf:heartbeat:docker image=centos:centos7 run_cmd="sleep 100000"
-```
-
-## Launch an entire pacemaker cluster across multiple hosts.
-
-Now, all we have to do is launch the container and feed in a list of the
-static IP addresses associated with the three nodes. The pacemaker container's
-launch script knows how to take the PCMK_NODE_LIST environment variable and
-dynamically create the corosync.conf file we need to form the cluster.
-
-```
-docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock -e PCMK_NODE_LIST="192.168.122.71 192.168.122.72 192.168.122.73" --net=host --privileged=true --name=pcmk_test pacemaker_docker
-```
-
-Now, after executing those two commands on each host, you should be able
-to run 'crm_mon -1' to verify the cluster formed. In my case, executing
-crm_mon -1 within a container running pacemaker returns the following.
-
-```
-docker exec pcmk_test crm_mon -1
-Last updated: Tue Jul 28 14:57:44 2015
-Last change: Tue Jul 28 14:57:43 2015
-Stack: corosync
-Current DC: c7auto2 (2) - partition with quorum
-Version: 1.1.12-a14efad
-3 Nodes configured
-0 Resources configured
-
-
-Online: [ c7auto1 c7auto2 c7auto3 ]
-```
-
-My three host machines are c7auto<1-3>. Pacemaker running in the container adpoted
-the hostname of the docker host machine because I set --net=host.
-
-## Virtual IP addresses and the Cloud.
-
-Traditionally pacemaker manages a VIP using the IPaddr2 resource-agent. This
-agent assigns a VIP to a local NIC, then performs ARP updates to inform the
-switching hardware that the VIP's layer2 MAC has changed. This method works
-fine in containerized docker instances as long as we have control over the
-network. By using the --net=host and --privileged=true docker run options,
-the pacemaker docker container has all the permissions it needs to manage
-VIPs using IPaddr2.
-
-In a cloud environment, we might not be able to dynamically assign any IP we
-want to a host. Instead we may need to use the cloud provider's API to assign
-a VIP to a specfic compute instance. If pacemaker needs to coordinate this
-VIP assignment, we'll need to create a resource-agent that utilizes the cloud
-providers API in order to automate moving the VIP between hosts during failover.
 
 
