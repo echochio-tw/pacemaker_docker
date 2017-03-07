@@ -108,10 +108,6 @@ docker exec pcmk_test pcs resource create mycontainer ocf:heartbeat:docker image
 
 ## Launch an entire pacemaker cluster across multiple hosts.
 
-```
-docker load < pcmk_container_248b5d9effc4.tar
-```
-
 Now, all we have to do is launch the container and feed in a list of the
 static IP addresses associated with the three nodes. The pacemaker container's
 launch script knows how to take the PCMK_NODE_LIST environment variable and
