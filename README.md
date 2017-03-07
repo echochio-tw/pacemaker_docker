@@ -27,7 +27,7 @@ associated with the host. Pacemaker is launching containers on the host and
 in manyway represents the host.
 
 ```
-docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host  --name=pcmk_test 6b5c48968492
+docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host  --name=pcmk_test pacemaker_docker
 ```
 
 If you need pacemaker to be able to manage a VIP using the IPaddr2 resource,
@@ -35,7 +35,7 @@ then the --privileged=true option must be used. This gives pacemaker the ability
 to modify the IP addresses associated with local network devices. 
 
 ```
-docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host --privileged=true --name=pcmk_test 26e53d8b4652
+docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host --privileged=true --name=pcmk_test pacemaker_docker
 ```
 
 Verify that pacemaker within the container is active.
