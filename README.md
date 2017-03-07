@@ -25,6 +25,26 @@ docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host --privi
 Verify that pacemaker within the container is active.
 
 ```
+docker exec -it pcmk_test bash
+[root@test /]# ps -ef
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 07:52 ?        00:00:00 /bin/bash /usr/sbin/pcmk_launch.sh
+root         13      1  1 07:52 ?        00:00:00 corosync
+root         22      1  0 07:52 ?        00:00:00 pacemakerd
+haclust+     23     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/cib
+root         24     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/stonithd
+root         25     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/lrmd
+haclust+     26     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/attrd
+haclust+     27     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/pengine
+haclust+     28     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/crmd
+root         85      0  0 07:52 ?        00:00:00 bash
+root        101      1  0 07:52 ?        00:00:00 sleep 5
+root        102     85  0 07:52 ?        00:00:00 ps -ef
+
+```
+Verify that pacemaker within the container is active.
+
+```
 docker exec pcmk_test crm_mon -1
   Last updated: Fri Jul 24 21:50:20 2015
   Last change: Fri Jul 24 21:49:36 2015
