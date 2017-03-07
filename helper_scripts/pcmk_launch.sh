@@ -23,7 +23,7 @@ status()
 
 start()
 {
-	ip addr |grep "scope global eth0"|sed 's/    inet //g'|sed 's/16 scope global eth0//g'
+	ip addr |grep "scope global eth0"|sed 's/    inet //g'|sed 's/\/16 scope global eth0//g'
 	if [ -n "$nodelist" ]; then
 		pcs cluster setup --force --local --name k8master $nodelist
 	fi
