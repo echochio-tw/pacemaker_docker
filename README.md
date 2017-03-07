@@ -18,7 +18,7 @@ Then the --privileged=true option must be used. This gives pacemaker the ability
 to modify the IP addresses associated with local network devices. 
 
 ```
-docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host --privileged=true --ip 192.168.0.67 --name=pcmk_test pacemaker_docker
+docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host --privileged=true --name=pcmk_test pacemaker_docker
 
 ```
 
