@@ -14,24 +14,7 @@ Creating a docker container image is trivial.
 
 ## Launch standalone pacemaker instance for testing.
 
-Note the usage of -v to mount the host docker.sock file into the container
-as well as the --net=host option which gives the container access to the
-host's network devices.
-
-We need the docker.sock file accessible so pacemaker can launch containers
-on the host while pacemaker is living within a container.
-
-We need the --net=host option set so pacemaker can bind to the host's static
-local ip address. Even though pacemaker is running in a container, it is
-associated with the host. Pacemaker is launching containers on the host and
-in manyway represents the host.
-
-```
-docker run -d -P -v /var/run/docker.sock:/var/run/docker.sock --net=host  --name=pcmk_test pacemaker_docker
-```
-
-If you need pacemaker to be able to manage a VIP using the IPaddr2 resource,
-then the --privileged=true option must be used. This gives pacemaker the ability
+Then the --privileged=true option must be used. This gives pacemaker the ability
 to modify the IP addresses associated with local network devices. 
 
 ```
