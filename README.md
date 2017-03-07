@@ -3,41 +3,13 @@ Docker containerization of the Pacemaker High Availability Cluster Manager
 
 ## Example Create Image
 
-Creating a docker container image is trivial. Just run the pcmk_create_image.sh
-command. This script will spit out a .tar file which represents a containized
-pacemaker docker image.
+Creating a docker container image is trivial. 
 
 ```
-./pcmk_create_image.sh 
-Making Dockerfile
-Making image
-Sending build context to Docker daemon 153.6 kB
-Sending build context to Docker daemon 
-Step 0 : FROM centos:centos7
- ---> 7322fbe74aa5
-Step 1 : RUN yum install -y net-tools pacemaker resource-agents pcs corosync which fence-agents-common sysvinit-tools docker
- ---> Using cache
- ---> 85b377e743c0
-Step 2 : ADD /helper_scripts /usr/sbin
- ---> 56159447ef4a
-Removing intermediate container 38cce298acac
-Step 3 : ADD defaults/corosync.conf /etc/corosync/
- ---> d63136057bcb
-Removing intermediate container a77b10f0ef2a
-Step 4 : ENTRYPOINT /usr/sbin/pcmk_launch.sh
- ---> Running in 79441ceb0fca
- ---> 248b5d9effc4
-Removing intermediate container 79441ceb0fca
-Successfully built 248b5d9effc4
-Docker container 248b5d9effc4 is exported to tar file pcmk_container_248b5d9effc4.tar
-```
+# git clone git@github.com:chio-nzgft/pacemaker_docker.git
+# cd pacemaker_docker
+# docker build -t pcmk_container .
 
-Given the example above, you can load the pacemaker docker container image file,
-pcmk_container_248b5d9effc4.tar, onto any docker host you want using the following
-command.
-
-```
-docker load < pcmk_container_248b5d9effc4.tar
 ```
 
 ## Launch standalone pacemaker instance for testing.
