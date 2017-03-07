@@ -8,7 +8,7 @@ Creating a docker container image is trivial.
 ```
 # git clone git@github.com:chio-nzgft/pacemaker_docker.git
 # cd pacemaker_docker
-# docker build -t pcmk_container .
+# docker build -t pacemaker_docker .
 
 ```
 
