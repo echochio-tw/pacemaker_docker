@@ -41,28 +41,42 @@ root         85      0  0 07:52 ?        00:00:00 bash
 root        101      1  0 07:52 ?        00:00:00 sleep 5
 root        102     85  0 07:52 ?        00:00:00 ps -ef
 
+[root@test /]# crm_mon -1
+Stack: corosync
+Current DC: test.com (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
+Last updated: Tue Mar  7 07:56:58 2017          Last change: Tue Mar  7 07:56:57 2017 by hacluster via crmd on test.com
+
+1 node and 0 resources configured
+
+Online: [ test.com ]
+
+No active resources
+
+
 ```
 Verify that pacemaker within the container is active.
 
 ```
-docker exec pcmk_test crm_mon -1
-  Last updated: Fri Jul 24 21:50:20 2015
-  Last change: Fri Jul 24 21:49:36 2015
-  Stack: corosync
-  Current DC: 8e1eae1a7d0b (1) - partition with quorum
-  Version: 1.1.12-a14efad
-  1 Nodes configured
-  0 Resources configured
+# docker exec -it pcmk_test  crm_mon -1
+Stack: corosync
+Current DC: test.com (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
+Last updated: Tue Mar  7 07:58:14 2017          Last change: Tue Mar  7 07:56:57 2017 by hacluster via crmd on test.com
 
-  Online: [ 8e1eae1a7d0b ]
+1 node and 0 resources configured
+
+Online: [ test.com ]
+
+No active resources
+
 ```
 
 Verify that the container has access to the host's docker instance
 
 ```
-docker exec pcmk_test docker ps
-  CONTAINER ID        IMAGE                 COMMAND                CREATED             STATUS              PORTS               NAMES
-  8e1eae1a7d0b        56992a77e0a9:latest   "/bin/sh -c /usr/sbi   7 seconds ago       Up 6 seconds                            pcmk_test        
+# docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
+90ab96174d87        pacemaker_docker    "/bin/sh -c /usr/sbin"   About a minute ago   Up About a minute                       pcmk_test
+
 ```
 
 Verify the containerized pacemaker instance can launch and monitor a
