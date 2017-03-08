@@ -25,6 +25,9 @@ start()
 		export IP=`ip addr |grep "scope global eth0"|sed 's/    inet //g'|sed 's/\/16 scope global eth0//g'`
 		sed -i 's/127.0.0.1/'$(echo $IP)'/g' /etc/corosync/corosync.conf
 		sed -i 's/Listen 80/Listen '$(echo $IP)':80/g' /etc/httpd/conf/httpd.conf
+		mkdir -p /etc/systemd/system-preset/
+		echo 'enable pcsd.service' > /etc/systemd/system-preset/00-pcsd.preset
+		systemctl enable pcsd
 	fi
 		
 	if [ -n "$nodelist" ]; then
@@ -33,6 +36,7 @@ start()
 	rm -f /usr/local/apache2/logs/httpd.pid
 
 	/sbin/httpd -DFOREGROUND &
+	/usr/lib/systemd/systemd --system
 	
 	/usr/share/corosync/corosync start > /dev/null 2>&1
 	mkdir -p /var/run
