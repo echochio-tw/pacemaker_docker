@@ -1,7 +1,5 @@
 #!/bin/bash
 
-nodelist="$PCMK_NODE_LIST"
-
 trap "stop; exit 0;" SIGTERM SIGINT 
 
 status()
@@ -23,7 +21,11 @@ status()
 
 start()
 {
-	ip addr |grep "scope global eth0"|sed 's/    inet //g'|sed 's/\/16 scope global eth0//g'
+	if [ ! -n "$IP" ]; then
+		export IP=`ip addr |grep "scope global eth0"|sed 's/    inet //g'|sed 's/\/16 scope global eth0//g'`
+		sed -i 's/127.0.0.1/'$(echo $IP)'/g' /etc/corosync/corosync.conf
+	fi
+		
 	if [ -n "$nodelist" ]; then
 		pcs cluster setup --force --local --name k8master $nodelist
 	fi
