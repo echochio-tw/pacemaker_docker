@@ -142,8 +142,22 @@ Use ngrok pass to out site
 # docker ps -a |grep pcmk_test1
 bfdd7ee90038        pacemaker_docker    "/bin/sh -c /usr/sbin"   3 minutes ago       Up 3 minutes        0.0.0.0:32778->2224/tcp   pcmk_test1
 
-# /root/ngrok tcp 0.0.0.0:32778
+# /root/ngrok tcp 0.0.0.0:32778 
+
+ngrok by @inconshreveable                                                                                                                                                                  (Ctrl+C to quit)
+
+Session Status                online
+Account                       hahaha (Plan: Free)
+Version                       2.1.18
+Region                        United States (us)
+Web Interface                 http://127.0.0.1:4041
+Forwarding                    tcp://0.tcp.ngrok.io:16300 -> 0.0.0.0:32778
+
+Connections                   ttl     opn     rt1     rt5     p50     p90
+                              0       0       0.00    0.00    0.00    0.00
+
 ```
+https://0.tcp.ngrok.io:16300/
 
 
 
