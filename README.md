@@ -131,10 +131,19 @@ Test cluster Auth
 ```
 # docker exec -it pcmk_test1 pcs cluster auth 172.17.0.3 172.17.0.4 172.17.0.5
 Username: hacluster
-Password:
+Password: hacluster
 172.17.0.3: Authorized
 172.17.0.4: Authorized
 172.17.0.5: Authorized
 ```
 
-Use ngrok
+Use ngrok pass to out site
+```
+# docker ps -a |grep pcmk_test1
+bfdd7ee90038        pacemaker_docker    "/bin/sh -c /usr/sbin"   3 minutes ago       Up 3 minutes        0.0.0.0:32778->2224/tcp   pcmk_test1
+
+# /root/ngrok tcp 0.0.0.0:32778
+```
+
+
+
