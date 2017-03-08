@@ -108,10 +108,11 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 ```
 Edit hosts as your docker net work 
 
+```
 172.17.0.3      pcmk_test1
 172.17.0.4      pcmk_test2
 172.17.0.5      pcmk_test3
-
+```
 
 
 ```
