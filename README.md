@@ -20,7 +20,7 @@ docker run -d -P --name=pcmk_test pacemaker_docker
 Verify that pacemaker within the container is active.
 
 ```
-docker exec -it pcmk_test bash
+docker exec -it pcmk_test1 bash
 # docker exec -it pcmk_test bash
 [root@5b26503f05f0 /]# ps -ef
 UID         PID   PPID  C STIME TTY          TIME CMD
@@ -106,17 +106,25 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 5b26503f05f0        pacemaker_docker    "/bin/sh -c /usr/sbin"   About a minute ago   Up About a minute                       pcmk_test
 
 ```
-Edit hosts as your docker net work 
+Run cluster
+```
+docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test1 pacemaker_docker
+docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test2 pacemaker_docker
+docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test3 pacemaker_docker
+```
+check your docker CONTAINER IP
 
 ```
 172.17.0.3      pcmk_test1
 172.17.0.4      pcmk_test2
 172.17.0.5      pcmk_test3
 ```
-
-
+Test cluster Auth
 ```
-docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test1 pacemaker_docker
-docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test2 pacemaker_docker
-docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test3 pacemaker_docker
+# docker exec -it pcmk_test1 pcs cluster auth 172.17.0.3 172.17.0.4 172.17.0.5
+Username: hacluster
+Password:
+172.17.0.3: Authorized
+172.17.0.4: Authorized
+172.17.0.5: Authorized
 ```
