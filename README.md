@@ -14,7 +14,7 @@ Creating a docker container image is trivial.
 
 ## Launch standalone pacemaker instance for testing.
 ```
-docker run -d -P --privileged=true --name=pcmk_test pacemaker_docker
+docker run -d -P --name=pcmk_test pacemaker_docker
 ```
 
 Verify that pacemaker within the container is active.
