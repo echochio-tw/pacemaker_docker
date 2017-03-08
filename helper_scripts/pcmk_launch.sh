@@ -1,5 +1,9 @@
 #!/bin/bash
 
+nodelist1="$NODE1"
+nodelist2="$NODE2"
+nodelist3="$NODE3"
+
 trap "stop; exit 0;" SIGTERM SIGINT 
 
 status()
@@ -21,6 +25,14 @@ status()
 
 start()
 {
+
+	if [ -n "$nodelist1" ]; then
+		cp /etc/corosync/corosync-node3.conf /etc/corosync/corosync.conf
+		sed -i 's/172.17.0.2/'$(echo $nodelist1)'/g' /etc/corosync/corosync.conf
+		sed -i 's/172.17.0.3/'$(echo $nodelist2)'/g' /etc/corosync/corosync.conf
+		sed -i 's/172.17.0.4/'$(echo $nodelist3)'/g' /etc/corosync/corosync.conf
+	fi
+	
 	if [ ! -n "$IP" ]; then
 		export IP=`ip addr |grep "scope global eth0"|sed 's/    inet //g'|sed 's/\/16 scope global eth0//g'`
 		sed -i 's/127.0.0.1/'$(echo $IP)'/g' /etc/corosync/corosync.conf
