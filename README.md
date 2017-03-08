@@ -114,18 +114,19 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 
 ```
-Run cluster
-```
-docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test1 pacemaker_docker
-docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test2 pacemaker_docker
-docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test3 pacemaker_docker
-```
-check your docker CONTAINER IP
+
+if your docker next CONTAINER IP
 
 ```
 172.17.0.3      pcmk_test1
 172.17.0.4      pcmk_test2
 172.17.0.5      pcmk_test3
+```
+Run cluster
+```
+docker run -d -P -e NODE1="172.16.0.2" -e NODE2="172.16.0.3" -e NODE3="172.16.0.4" --privileged=true --name=pcmk_test1 pacemaker_docker
+docker run -d -P -e NODE1="172.16.0.2" -e NODE2="172.16.0.3" -e NODE3="172.16.0.4" --privileged=true --name=pcmk_test2 pacemaker_docker
+docker run -d -P -e NODE1="172.16.0.2" -e NODE2="172.16.0.3" -e NODE3="172.16.0.4" --privileged=true --name=pcmk_test3 pacemaker_docker
 ```
 Test cluster Auth
 ```
