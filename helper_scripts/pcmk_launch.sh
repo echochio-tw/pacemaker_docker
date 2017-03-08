@@ -24,6 +24,7 @@ start()
 	if [ ! -n "$IP" ]; then
 		export IP=`ip addr |grep "scope global eth0"|sed 's/    inet //g'|sed 's/\/16 scope global eth0//g'`
 		sed -i 's/127.0.0.1/'$(echo $IP)'/g' /etc/corosync/corosync.conf
+		sed -i 's/Listen 80/Listen '$(echo $IP)':80/g' /etc/httpd/conf/httpd.conf
 	fi
 		
 	if [ -n "$nodelist" ]; then
