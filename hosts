@@ -4,6 +4,6 @@ fe00::0 ip6-localnet
 ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
-172.25.0.3      pcmk_test1
-172.25.0.4      pcmk_test2
+172.17.0.3      pcmk_test1
+172.17.0.4      pcmk_test2
 172.25.0.5      pcmk_test3
