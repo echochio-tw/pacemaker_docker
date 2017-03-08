@@ -18,7 +18,7 @@ Then the --privileged=true option must be used. This gives pacemaker the ability
 to modify the IP addresses associated with local network devices. 
 
 ```
-docker run -d -P -v --privileged=true --name=pcmk_test pacemaker_docker
+docker run -d -P --privileged=true --name=pcmk_test pacemaker_docker
 ```
 
 Verify that pacemaker within the container is active.
