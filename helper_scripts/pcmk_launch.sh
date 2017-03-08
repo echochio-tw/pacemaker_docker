@@ -30,7 +30,10 @@ start()
 	if [ -n "$nodelist" ]; then
 		pcs cluster setup --force --local --name k8master $nodelist
 	fi
+	rm -f /usr/local/apache2/logs/httpd.pid
 
+	/sbin/httpd -DFOREGROUND &
+	
 	/usr/share/corosync/corosync start > /dev/null 2>&1
 	mkdir -p /var/run
 
