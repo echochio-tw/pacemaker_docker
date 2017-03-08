@@ -36,7 +36,9 @@ start()
 	rm -f /usr/local/apache2/logs/httpd.pid
 
 	/sbin/httpd -DFOREGROUND &
-	/usr/lib/systemd/systemd --system
+	/usr/lib/systemd/systemd --system & 
+	
+	sleep 30
 	
 	/usr/share/corosync/corosync start > /dev/null 2>&1
 	mkdir -p /var/run
