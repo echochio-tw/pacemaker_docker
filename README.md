@@ -25,38 +25,45 @@ Verify that pacemaker within the container is active.
 
 ```
 docker exec -it pcmk_test bash
-[root@test /]# ps -ef
+# docker exec -it pcmk_test bash
+[root@5b26503f05f0 /]# ps -ef
 UID         PID   PPID  C STIME TTY          TIME CMD
-root          1      0  0 07:52 ?        00:00:00 /bin/bash /usr/sbin/pcmk_launch.sh
-root         13      1  1 07:52 ?        00:00:00 corosync
-root         22      1  0 07:52 ?        00:00:00 pacemakerd
-haclust+     23     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/cib
-root         24     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/stonithd
-root         25     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/lrmd
-haclust+     26     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/attrd
-haclust+     27     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/pengine
-haclust+     28     22  0 07:52 ?        00:00:00 /usr/libexec/pacemaker/crmd
-root         85      0  0 07:52 ?        00:00:00 bash
-root        101      1  0 07:52 ?        00:00:00 sleep 5
-root        102     85  0 07:52 ?        00:00:00 ps -ef
+root          1      0  0 03:39 ?        00:00:00 /bin/bash /usr/sbin/pcmk_launch.sh
+root         16      1  0 03:39 ?        00:00:00 /sbin/httpd -DFOREGROUND
+root         23      1  2 03:39 ?        00:00:00 corosync
+apache       25     16  0 03:39 ?        00:00:00 /sbin/httpd -DFOREGROUND
+apache       26     16  0 03:39 ?        00:00:00 /sbin/httpd -DFOREGROUND
+apache       27     16  0 03:39 ?        00:00:00 /sbin/httpd -DFOREGROUND
+apache       28     16  0 03:39 ?        00:00:00 /sbin/httpd -DFOREGROUND
+apache       29     16  0 03:39 ?        00:00:00 /sbin/httpd -DFOREGROUND
+root         37      1  0 03:39 ?        00:00:00 pacemakerd
+haclust+     38     37  1 03:39 ?        00:00:00 /usr/libexec/pacemaker/cib
+root         39     37  1 03:39 ?        00:00:00 /usr/libexec/pacemaker/stonithd
+root         40     37  1 03:39 ?        00:00:00 /usr/libexec/pacemaker/lrmd
+haclust+     41     37  1 03:39 ?        00:00:00 /usr/libexec/pacemaker/attrd
+haclust+     42     37  1 03:39 ?        00:00:00 /usr/libexec/pacemaker/pengine
+haclust+     43     37  1 03:39 ?        00:00:00 /usr/libexec/pacemaker/crmd
+root         45      0  0 03:39 ?        00:00:00 bash
+root         63      1  0 03:39 ?        00:00:00 sleep 5
+root         64     45  0 03:39 ?        00:00:00 ps -ef
 
-[root@test /]# crm_mon -1
+
+[root@5b26503f05f0 /]# crm_mon -1
 Stack: corosync
-Current DC: test.com (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
-Last updated: Tue Mar  7 07:56:58 2017          Last change: Tue Mar  7 07:56:57 2017 by hacluster via crmd on test.com
+Current DC: 5b26503f05f0 (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
+Last updated: Wed Mar  8 03:41:00 2017          Last change: Wed Mar  8 03:40:09 2017 by hacluster via crmd on 5b26503f05f0
 
 1 node and 0 resources configured
 
-Online: [ test.com ]
+Online: [ 5b26503f05f0 ]
 
 No active resources
 
-# corosync-cmapctl | grep members
+[root@5b26503f05f0 /]#  corosync-cmapctl | grep members
 runtime.totem.pg.mrp.srp.members.1.config_version (u64) = 0
 runtime.totem.pg.mrp.srp.members.1.ip (str) = r(0) ip(172.17.0.2)
 runtime.totem.pg.mrp.srp.members.1.join_count (u32) = 1
 runtime.totem.pg.mrp.srp.members.1.status (str) = joined
-
 
 ```
 Verify that pacemaker within the container is active.
