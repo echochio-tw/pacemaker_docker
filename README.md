@@ -71,16 +71,16 @@ Verify that pacemaker within the container is active.
 ```
 # docker exec -it pcmk_test  crm_mon -1
 Stack: corosync
-Current DC: test.com (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
-Last updated: Tue Mar  7 07:58:14 2017          Last change: Tue Mar  7 07:56:57 2017 by hacluster via crmd on test.com
+Current DC: 5b26503f05f0 (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
+Last updated: Wed Mar  8 03:44:37 2017          Last change: Wed Mar  8 03:40:09 2017 by hacluster via crmd on 5b26503f05f0
 
 1 node and 0 resources configured
 
-Online: [ test.com ]
+Online: [ 5b26503f05f0 ]
 
 No active resources
 
-# docker exec pcmk_test  pcs status
+# docker exec -it pcmk_test  pcs status
 Cluster name: docker
 WARNING: corosync and pacemaker node names do not match (IPs used in setup?)
 Stack: corosync
@@ -89,7 +89,7 @@ Last updated: Tue Mar  7 08:07:18 2017          Last change: Tue Mar  7 08:04:35
 
 1 node and 0 resources configured
 
-Online: [ test.com ]
+Online: [ 5b26503f05f0 ]
 
 No resources
 
@@ -107,9 +107,19 @@ Verify that the container has access to the host's docker instance
 ```
 # docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
-90ab96174d87        pacemaker_docker    "/bin/sh -c /usr/sbin"   About a minute ago   Up About a minute                       pcmk_test
+5b26503f05f0        pacemaker_docker    "/bin/sh -c /usr/sbin"   About a minute ago   Up About a minute                       pcmk_test
 
 ```
+Edit hosts as your docker net work 
+
+172.17.0.3      pcmk_test1
+172.17.0.4      pcmk_test2
+172.17.0.5      pcmk_test3
 
 
 
+```
+docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test1 pacemaker_docker
+docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test2 pacemaker_docker
+docker run -d -P -v /root/pacemaker_docker/hosts:/etc/hosts --privileged=true --name=pcmk_test3 pacemaker_docker
+```
