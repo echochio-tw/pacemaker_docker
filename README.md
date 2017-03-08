@@ -157,7 +157,8 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
                               0       0       0.00    0.00    0.00    0.00
 
 ```
-https://0.tcp.ngrok.io:16300/
+use https://0.tcp.ngrok.io:16300
+
 
 
 
