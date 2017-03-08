@@ -51,6 +51,12 @@ Online: [ test.com ]
 
 No active resources
 
+# corosync-cmapctl | grep members
+runtime.totem.pg.mrp.srp.members.1.config_version (u64) = 0
+runtime.totem.pg.mrp.srp.members.1.ip (str) = r(0) ip(172.17.0.2)
+runtime.totem.pg.mrp.srp.members.1.join_count (u32) = 1
+runtime.totem.pg.mrp.srp.members.1.status (str) = joined
+
 
 ```
 Verify that pacemaker within the container is active.
