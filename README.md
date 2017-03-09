@@ -105,34 +105,80 @@ Daemon Status:
 ```
 
 Verify that the container has access to the host's docker instance
-
 ```
 #  docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
 8106dd63b7c7        pacemaker_docker    "/bin/sh -c /usr/sbin"   3 minutes ago       Up 3 minutes        0.0.0.0:32777->2224/tcp   pcmk_test
-
+```
+Now remove pcmk_test container
+```
+#  docker rm -f pcmk_test
 
 ```
-
 if your docker next CONTAINER IP
 
 ```
 172.17.0.3      pcmk_test1
 172.17.0.4      pcmk_test2
 172.17.0.5      pcmk_test3
+172.17.0.6      pcmk_test4
+172.17.0.7      pcmk_test5
 ```
 Run cluster
 ```
 docker run -d -P --privileged=true --name=pcmk_test1 pacemaker_docker
 docker run -d -P --privileged=true --name=pcmk_test2 pacemaker_docker
 docker run -d -P --privileged=true --name=pcmk_test3 pacemaker_docker
+docker run -d -P --privileged=true --name=pcmk_test4 pacemaker_docker
+docker run -d -P --privileged=true --name=pcmk_test5 pacemaker_docker
 ```
 Test cluster Auth
 ```
-# docker exec -it pcmk_test1 pcs cluster auth 172.17.0.3 172.17.0.4 172.17.0.5 -u hacluster -p hacluster
+# docker exec -it pcmk_test1 pcs cluster auth 172.17.0.2 172.17.0.3 172.17.0.4 172.17.0.5 172.17.0.6 -u hacluster -p hacluster
 172.17.0.3: Authorized
 172.17.0.4: Authorized
 172.17.0.5: Authorized
+```
+Copy config 
+```
+# docker exec -it pcmk_test1 cp /etc/corosync/corosync-node5.conf /etc/corosync/corosync.conf
+# docker exec -it pcmk_test2 cp /etc/corosync/corosync-node5.conf /etc/corosync/corosync.conf
+# docker exec -it pcmk_test3 cp /etc/corosync/corosync-node5.conf /etc/corosync/corosync.conf
+# docker exec -it pcmk_test4 cp /etc/corosync/corosync-node5.conf /etc/corosync/corosync.conf
+# docker exec -it pcmk_test5 cp /etc/corosync/corosync-node5.conf /etc/corosync/corosync.conf
+```
+Restart config
+```
+# docker exec -it pcmk_test1 sh /usr/sbin/pcmk_restart.sh &
+# docker exec -it pcmk_test2 sh /usr/sbin/pcmk_restart.sh &
+# docker exec -it pcmk_test3 sh /usr/sbin/pcmk_restart.sh &
+# docker exec -it pcmk_test4 sh /usr/sbin/pcmk_restart.sh &
+# docker exec -it pcmk_test5 sh /usr/sbin/pcmk_restart.sh &
+```
+
+Check Cluster status
+```
+# docker exec -it pcmk_test1  pcs status
+Cluster name: docker
+WARNING: no stonith devices and stonith-enabled is not false
+WARNING: corosync and pacemaker node names do not match (IPs used in setup?)
+Stack: corosync
+Current DC: 865fccf74f05 (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
+Last updated: Thu Mar  9 06:27:20 2017          Last change: Thu Mar  9 06:18:29 2017 by hacluster via crmd on 865fccf74f05
+
+5 nodes and 0 resources configured
+
+Online: [ 0543d49853c5 425ccb3158eb 865fccf74f05 c5f69ec43682 cbd9dfffa8c8 ]
+
+No resources
+
+
+Daemon Status:
+  corosync: inactive/disabled
+  pacemaker: inactive/disabled
+  pcsd: inactive/enabled
+
+
 ```
 
 Use ngrok pass to out site
