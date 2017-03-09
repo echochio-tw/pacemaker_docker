@@ -130,9 +130,7 @@ docker run -d -P -e NODE1="172.16.0.2" -e NODE2="172.16.0.3" -e NODE3="172.16.0.
 ```
 Test cluster Auth
 ```
-# docker exec -it pcmk_test1 pcs cluster auth 172.17.0.3 172.17.0.4 172.17.0.5
-Username: hacluster
-Password: hacluster
+# docker exec -it pcmk_test1 pcs cluster auth 172.17.0.3 172.17.0.4 172.17.0.5 -u hacluster -p hacluster
 172.17.0.3: Authorized
 172.17.0.4: Authorized
 172.17.0.5: Authorized
