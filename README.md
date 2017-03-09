@@ -179,10 +179,37 @@ Daemon Status:
   corosync: inactive/disabled
   pacemaker: inactive/disabled
   pcsd: inactive/enabled
+```
+Add resource Cluster_VIP & Start it
+```
+# docker exec -it pcmk_test1 pcs resource create Cluster_VIP ocf:heartbeat:IPaddr2 ip=172.17.0.10 cidr_netmask=24 op monitor interval=20s
+# docker exec -it pcmk_test1 pcs property set stonith-enabled=false
+# docker exec -it pcmk_test1 pcs property set no-quorum-policy=ignore
+# docker exec -it pcmk_test1 pcs resource defaults migration-threshold=1
+```
+Check Cluster_VIP status
+```
+# docker exec -it pcmk_test3  pcs status
+Cluster name: docker
+WARNING: corosync and pacemaker node names do not match (IPs used in setup?)
+Stack: corosync
+Current DC: 6572fdae4a56 (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
+Last updated: Thu Mar  9 07:56:44 2017          Last change: Thu Mar  9 07:56:41 2017 by root via crm_attribute on 2d31ef46d8dd
 
+5 nodes and 1 resource configured
+
+Online: [ 2d31ef46d8dd 3cf401337c4b 41cd74ea53aa 6572fdae4a56 9a9df1fcf5f7 ]
+
+Full list of resources:
+
+ Cluster_VIP    (ocf::heartbeat:IPaddr2):       Started 2d31ef46d8dd
+
+Daemon Status:
+  corosync: inactive/disabled
+  pacemaker: inactive/disabled
+  pcsd: inactive/enabled
 
 ```
-
 Use ngrok pass to out site
 ```
 # docker ps -a |grep pcmk_test1
