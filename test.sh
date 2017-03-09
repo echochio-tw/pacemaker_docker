@@ -5,8 +5,8 @@ docker run -d -P  --privileged=true --name=pcmk_test1 pacemaker_docker
 docker run -d -P  --privileged=true --name=pcmk_test2 pacemaker_docker
 docker run -d -P  --privileged=true --name=pcmk_test3 pacemaker_docker
 
-echo Sleep 40 sec wait for Cluster start
-sleep 40
+echo Sleep 60 sec wait for Cluster start
+sleep 60
 
 echo copy 3 node config file
 docker exec -it pcmk_test1 cp /etc/corosync/corosync-node3.conf /etc/corosync/corosync.conf
