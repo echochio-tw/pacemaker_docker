@@ -118,11 +118,11 @@ Now remove pcmk_test container
 if your docker next CONTAINER IP
 
 ```
-172.17.0.3      pcmk_test1
-172.17.0.4      pcmk_test2
-172.17.0.5      pcmk_test3
-172.17.0.6      pcmk_test4
-172.17.0.7      pcmk_test5
+172.17.0.2      pcmk_test1
+172.17.0.3      pcmk_test2
+172.17.0.4      pcmk_test3
+172.17.0.5      pcmk_test4
+172.17.0.6      pcmk_test5
 ```
 Run cluster
 ```
@@ -135,9 +135,11 @@ docker run -d -P --privileged=true --name=pcmk_test5 pacemaker_docker
 Test cluster Auth
 ```
 # docker exec -it pcmk_test1 pcs cluster auth 172.17.0.2 172.17.0.3 172.17.0.4 172.17.0.5 172.17.0.6 -u hacluster -p hacluster
+172.17.0.2: Authorized
 172.17.0.3: Authorized
 172.17.0.4: Authorized
 172.17.0.5: Authorized
+172.17.0.6: Authorized
 ```
 Copy config 
 ```
