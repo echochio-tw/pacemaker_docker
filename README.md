@@ -123,9 +123,9 @@ if your docker next CONTAINER IP
 ```
 Run cluster
 ```
-docker run -d -P -e NODE1="172.16.0.2" -e NODE2="172.16.0.3" -e NODE3="172.16.0.4" --privileged=true --name=pcmk_test1 pacemaker_docker
-docker run -d -P -e NODE1="172.16.0.2" -e NODE2="172.16.0.3" -e NODE3="172.16.0.4" --privileged=true --name=pcmk_test2 pacemaker_docker
-docker run -d -P -e NODE1="172.16.0.2" -e NODE2="172.16.0.3" -e NODE3="172.16.0.4" --privileged=true --name=pcmk_test3 pacemaker_docker
+docker run -d -P --privileged=true --name=pcmk_test1 pacemaker_docker
+docker run -d -P --privileged=true --name=pcmk_test2 pacemaker_docker
+docker run -d -P --privileged=true --name=pcmk_test3 pacemaker_docker
 ```
 Test cluster Auth
 ```
