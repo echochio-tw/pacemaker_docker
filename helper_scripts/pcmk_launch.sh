@@ -3,6 +3,7 @@
 nodelist1="$NODE1"
 nodelist2="$NODE2"
 nodelist3="$NODE3"
+pcemakerstop="$PCE"
 
 trap "stop; exit 0;" SIGTERM SIGINT 
 
@@ -52,19 +53,22 @@ start()
 	
 	sleep 30
 	
-	/usr/share/corosync/corosync start > /dev/null 2>&1
-	mkdir -p /var/run
+	if [ ! -n "$pcemakerstop" ]; then
+	
+		/usr/share/corosync/corosync start > /dev/null 2>&1
+		mkdir -p /var/run
 
-	export PCMK_debugfile=/var/log/pacemaker.log
-	(pacemakerd &) & > /dev/null 2>&1
-	sleep 5
+		export PCMK_debugfile=/var/log/pacemaker.log
+		(pacemakerd &) & > /dev/null 2>&1
+		sleep 5
 
-	pid=$(pidof pacemakerd)
-	if [ "$?" -ne 0 ]; then
-		echo "startup of pacemaker failed"
-		exit 1
+		pid=$(pidof pacemakerd)
+		if [ "$?" -ne 0 ]; then
+			echo "startup of pacemaker failed"
+			exit 1
+		fi
+		echo "$pid" > /var/run/pacemakerd.pid
 	fi
-	echo "$pid" > /var/run/pacemakerd.pid
 }
 
 stop()
