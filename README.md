@@ -71,7 +71,7 @@ runtime.totem.pg.mrp.srp.members.1.status (str) = joined
 Verify that pacemaker within the container is active.
 
 ```
-# ]# docker exec -it pcmk_test  crm_mon -1
+# docker exec -it pcmk_test  crm_mon -1
 Stack: corosync
 Current DC: 8106dd63b7c7 (version 1.1.15-11.el7_3.4-e174ec8) - partition with quorum
 Last updated: Wed Mar  8 08:01:35 2017          Last change: Wed Mar  8 07:59:55 2017 by hacluster via crmd on 8106dd63b7c7
@@ -106,7 +106,7 @@ Daemon Status:
 
 Verify that the container has access to the host's docker instance
 ```
-#  docker ps -a
+# docker ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
 8106dd63b7c7        pacemaker_docker    "/bin/sh -c /usr/sbin"   3 minutes ago       Up 3 minutes        0.0.0.0:32777->2224/tcp   pcmk_test
 ```
@@ -232,8 +232,4 @@ Connections                   ttl     opn     rt1     rt5     p50     p90
 ```
 use https://0.tcp.ngrok.io:16300
 
-![alt tag](https://github.com/chio-nzgft/pacemaker_docker/raw/master/pic1.png)
-
-
-
-
+![alt tag](https://github.com/echochio-tw/pacemaker_docker/raw/master/pic1.png)
