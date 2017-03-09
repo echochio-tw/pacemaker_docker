@@ -20,7 +20,6 @@ docker run -d -P  --privileged=true --name=pcmk_test pacemaker_docker
 Verify that pacemaker within the container is active.
 
 ```
-docker exec -it pcmk_test1 bash
 # docker exec -it pcmk_test bash
 [root@8106dd63b7c7 /]# ps -ef
 UID         PID   PPID  C STIME TTY          TIME CMD
