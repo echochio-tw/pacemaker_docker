@@ -36,6 +36,7 @@ start()
 start
 
 while true; do
+        sleep 5
 done
 
 exit 0
