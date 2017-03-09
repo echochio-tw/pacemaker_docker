@@ -106,9 +106,9 @@ Daemon Status:
 
 Verify that the container has access to the host's docker instance
 ```
-# docker ps -a
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                     NAMES
-8106dd63b7c7        pacemaker_docker    "/bin/sh -c /usr/sbin"   3 minutes ago       Up 3 minutes        0.0.0.0:32777->2224/tcp   pcmk_test
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                                            NAMES
+146d5bc33d4d        pacemaker_docker    "/bin/sh -c /usr/sbin"   47 seconds ago      Up 44 seconds       0.0.0.0:32778->80/tcp, 0.0.0.0:32777->2224/tcp   pcmk_test
+
 ```
 Now remove pcmk_test container
 ```
