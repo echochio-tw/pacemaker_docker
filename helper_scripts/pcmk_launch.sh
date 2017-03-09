@@ -106,8 +106,10 @@ stop()
 start
 
 while true; do
-	status "pacemakerd" || exit 1
-	status "corosync" || exit 1
+	if [ ! -n "$pcemakerstop" ]; then
+		status "pacemakerd" || exit 1
+		status "corosync" || exit 1
+	fi
 	sleep 5
 done
 
